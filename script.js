@@ -389,6 +389,126 @@ nextButtonCarousel3.addEventListener('click', e => {
     
 });
 
+//---------- carousel 4 -----------
+
+const trackCarousel4 = document.querySelector('.carousel-track-carousel4');
+const nextButtonCarousel4= document.querySelector('.carousel-button-right-carousel4');
+const prevButtonCarousel4= document.querySelector('.carousel-button-left-carousel4');
+
+//index of the current slide
+var indexCarousel4 = 0;
+prevButtonCarousel4.style.visibility = "hidden";
+
+//store the slides in an array
+const slidesCarousel4 = Array.from(trackCarousel4.children);
+
+//get the size of each slide
+var slideWidthCarousel4 = slidesCarousel4[0].getBoundingClientRect().width;
+
+
+const moveToSlideCarousel4 = (track, currentSlide, targetSlide) => {
+    track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+
+    currentSlide.classList.remove('current-slide-carousel4');
+    targetSlide.classList.add('current-slide-carousel4');
+}
+
+const setSlidePositionCarousel4 = (slide, index, slideLength) => {
+    slideLength = slideWidthCarousel4 * index;
+    slide.style.left = slideLength + 'px';
+};
+slidesCarousel4.forEach(setSlidePositionCarousel4);
+
+window.addEventListener('resize', windowResizeCarousel4);
+
+function windowResizeCarousel4() {
+
+    slideWidthCarousel4 = slidesCarousel4[0].getBoundingClientRect().width;
+    slidesCarousel4.forEach(setSlidePositionCarousel4);
+
+    //on window resize, go to the previous slide so the slides don't only show half at the border
+
+    if (indexCarousel4 > 0) {
+        indexCarousel4 = indexCarousel4 - 1;
+
+        const currentSlide = trackCarousel4.querySelector('.current-slide-carousel4');
+        const prevSlide = currentSlide.previousElementSibling;
+    
+        moveToSlideCarousel4(trackCarousel4, currentSlide, prevSlide);
+
+        indexCarousel4 = 0;
+        prevButtonCarousel4.style.visibility = "hidden";
+        nextButtonCarousel4.style.visibility = "visible";
+    }
+}
+
+prevButtonCarousel4.addEventListener('click', e => {
+    if (indexCarousel4 > 0) {
+        indexCarousel4 = indexCarousel4 - 1;
+
+        if(window.innerWidth > 1100) {
+            if (indexCarousel4 < slidesCarousel4.length - 3) {
+                nextButtonCarousel4.style.visibility = "visible";
+            }
+        }
+        else {
+            if (indexCarousel4 < slidesCarousel4.length - 1) {
+                nextButtonCarousel4.style.visibility = "visible";
+            }
+        }
+
+        if (indexCarousel4 == 0) {
+            prevButtonCarousel4.style.visibility = "hidden";
+        }
+
+        const currentSlide = trackCarousel4.querySelector('.current-slide-carousel4');
+        const prevSlide = currentSlide.previousElementSibling;
+    
+        moveToSlideCarousel4(trackCarousel4, currentSlide, prevSlide);
+    }    
+});
+
+nextButtonCarousel4.addEventListener('click', e => {
+    
+    if(window.innerWidth > 1100) {
+        if (indexCarousel4 <= slidesCarousel4.length - 3) { //once .current-slide is the left positioned visible slide, stop the next button
+            indexCarousel4 = indexCarousel4 + 1;
+
+            if (indexCarousel4 > 0) {
+                prevButtonCarousel4.style.visibility = "visible";
+            }
+
+            if (indexCarousel4 ==  slidesCarousel4.length - 3) {
+                nextButtonCarousel4.style.visibility = "hidden";
+            }
+
+            const currentSlide = trackCarousel4.querySelector('.current-slide-carousel4');
+            const nextSlide = currentSlide.nextElementSibling;
+
+            moveToSlideCarousel4(trackCarousel4, currentSlide, nextSlide);
+        }
+    }
+    else {
+        if (indexCarousel4 <= slidesCarousel4.length - 1) { //once .current-slide is the left positioned visible slide, stop the next button
+            indexCarousel4 = indexCarousel4 + 1;
+
+            if (indexCarousel4 > 0) {
+                prevButtonCarousel4.style.visibility = "visible";
+            }
+
+            if (indexCarousel4 ==  slidesCarousel4.length - 1) {
+                nextButtonCarousel4.style.visibility = "hidden";
+            }
+
+            const currentSlide = trackCarousel4.querySelector('.current-slide-carousel4');
+            const nextSlide = currentSlide.nextElementSibling;
+
+            moveToSlideCarousel4(trackCarousel4, currentSlide, nextSlide);
+        }
+    }
+    
+});
+
 
 
 //---------- modals -----------
@@ -415,6 +535,3 @@ var span = document.getElementsByClassName("close")[0];
 span.onclick = function() {
     modal.style.display = "none";
 }
-
-
-//nice

@@ -399,6 +399,26 @@ img {
     right: -60px;
 }
 
+/* -- carousel 4 -- */
+
+.carousel-track-carousel4 {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    height: 100%;
+    transition: transform 300ms ease-in;
+}
+
+.carousel-button-left-carousel4 {
+    left: -60px;
+}
+
+.carousel-button-right-carousel4 {
+    right: -60px;
+}
+
+
 /* carousel mobile */
 
 @media (max-width: 1100px) {
